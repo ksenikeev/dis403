@@ -1,5 +1,7 @@
 package ru.itis.dis403.lab1_01.httpserver;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,8 +12,11 @@ import java.net.Socket;
 /**
  */
 public class HttpServer {
-    public static void main(String[] args) {
 
+    final static Logger logger = LogManager.getLogger(HttpServer.class);
+
+    public static void main(String[] args) {
+        logger.info("start HttpServer");
         try {
             ServerSocket serverSocket = new ServerSocket(8080);
             while (true) {
