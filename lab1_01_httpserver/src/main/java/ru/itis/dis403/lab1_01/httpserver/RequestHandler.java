@@ -23,6 +23,12 @@ public class RequestHandler {
             System.out.println(lineOne);
             logger.debug(lineOne);
             String[] components = lineOne.split(" ");
+            //TODO реализовать определение метода (GET, POST,...) для передачи как параметра в сервис
+            // http://localhost:8080/resource/part?name=tat&region=16
+            // URI /resource/part
+            //
+            // При наличии извлечь параметры и поместить в Map
+
             String resource = components[1];
             if (resource.equals("/shutdown")) {
                 logger.info("server stopped by client");
@@ -40,6 +46,7 @@ public class RequestHandler {
                     logger.debug("outputStream" + os);
                     IResourceService resourceService = Application.resourceMap.get(resource);
                     if (resourceService != null) {
+                        // TODO передавать метод, передавать Map с параметрами в функцию service
                         resourceService.service("GET", null, os);
                     } else {
                         new NotFoundService().service("GET", null, os);
