@@ -16,6 +16,9 @@ public class HttpServer {
     final static Logger logger = LogManager.getLogger(HttpServer.class);
 
     public static void main(String[] args) {
+
+        new Application().init();
+
         RequestHandler requestHandler = new RequestHandler();
         logger.info("start HttpServer");
         try {

@@ -37,17 +37,19 @@ public class RequestHandler {
                 if (message.isEmpty()) {
                     logger.debug("end of request header");
                     OutputStream os = clientSocket.getOutputStream();
-                    os.write("HTTP/1.1 200 OK\r\n".getBytes());
-                    os.write("Content-Type: text/html;charset=UTF-8\r\n".getBytes());
-                    os.write("\r\n".getBytes());
-                    os.write("<html><body>Hello!</body></html>".getBytes());
                     logger.debug("outputStream" + os);
+                    IResourceService resourceService = Application.resourceMap.get(resource);
+                    if (resourceService != null) {
+                        resourceService.service("GET", null, os);
+                    } else {
+                        new NotFoundService().service("GET", null, os);
+                    }
                     os.flush();
                     logger.debug("outputStream" + os);
                     break;
                 }
 
-                clientSocket.close();
+                //clientSocket.close();
             }
         } catch (IOException e) {
             logger.atError().withThrowable(e);
