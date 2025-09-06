@@ -29,15 +29,18 @@ public class HttpServer {
                 // Читаем пакет от клиента
                 String lineOne = reader.readLine();
                 System.out.println(lineOne);
+                logger.debug(lineOne);
                 String[] components = lineOne.split(" ");
                 String resource = components[1];
                 if (resource.equals("/shutdown")) {
+                    logger.info("server stopped by client");
                     break;
                 }
                 while (true) {
                     // Читаем пакет от клиента
                     String message = reader.readLine();
                     System.out.println(message);
+                    logger.debug(message);
 
                     if (message.isEmpty()) {
                         OutputStream os = clientSocket.getOutputStream();
@@ -54,6 +57,7 @@ public class HttpServer {
             }
             serverSocket.close();
         } catch (IOException e) {
+            logger.atError().withThrowable(e);
             throw new RuntimeException(e);
         }
 
