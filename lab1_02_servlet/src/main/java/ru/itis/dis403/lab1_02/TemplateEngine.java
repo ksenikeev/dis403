@@ -12,7 +12,9 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 @WebServlet("*.html")
 public class TemplateEngine extends HttpServlet {
@@ -23,9 +25,13 @@ public class TemplateEngine extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         logger.debug(request.getServletPath());
 
+        Map<String, String> params = new HashMap<>();
         Iterator<String> enumeration = request.getAttributeNames().asIterator();
         while (enumeration.hasNext()) {
-            logger.debug(enumeration.next());
+            String attributeName = enumeration.next();
+            String attributeValue = (String) request.getAttribute(attributeName);
+            logger.debug(attributeName + " : " + attributeValue);
+            params.put(attributeName, attributeValue);
         }
 
         String fileName = request.getServletPath().substring(1);
