@@ -11,10 +11,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 @WebServlet("*.html")
 public class TemplateEngine extends HttpServlet {
@@ -26,10 +23,10 @@ public class TemplateEngine extends HttpServlet {
         logger.debug(request.getServletPath());
 
         Map<String, String> params = new HashMap<>();
-        Iterator<String> enumeration = request.getAttributeNames().asIterator();
-        while (enumeration.hasNext()) {
-            String attributeName = enumeration.next();
-            String attributeValue = (String) request.getAttribute(attributeName);
+        Enumeration<String> enumeration = request.getAttributeNames();
+        while (enumeration.hasMoreElements()) {
+            String attributeName = enumeration.nextElement();
+            String attributeValue = request.getAttribute(attributeName).toString();
             logger.debug(attributeName + " : " + attributeValue);
             params.put(attributeName, attributeValue);
         }
