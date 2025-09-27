@@ -19,6 +19,10 @@ public class TemplateTest extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         logger.debug(request.getServletPath());
 
+
+        request.setAttribute("default", "Ваше имя");
+        request.setAttribute("param2", "Ваше имя");
+
         // Отрабатываем логику приложения
         // Отрисовка страницы - передаем дальше request
         request.getRequestDispatcher("/test.html")

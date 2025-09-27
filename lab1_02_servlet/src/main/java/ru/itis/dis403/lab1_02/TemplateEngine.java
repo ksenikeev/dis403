@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Enumeration;
+import java.util.Iterator;
 
 @WebServlet("*.html")
 public class TemplateEngine extends HttpServlet {
@@ -20,6 +22,11 @@ public class TemplateEngine extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         logger.debug(request.getServletPath());
+
+        Iterator<String> enumeration = request.getAttributeNames().asIterator();
+        while (enumeration.hasNext()) {
+            logger.debug(enumeration.next());
+        }
 
         String fileName = request.getServletPath().substring(1);
         URL path = TemplateEngine.class.getClassLoader()
