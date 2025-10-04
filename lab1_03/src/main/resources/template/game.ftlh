@@ -10,8 +10,9 @@
         color: red;
     }
 
-
-
+    table, td {
+        border: 1px solid black;
+    }
     .div_style {
         border: 1px solid #9fb5de;
     }
