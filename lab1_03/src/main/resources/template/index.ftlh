@@ -5,7 +5,19 @@
     <title>Тест Freemarker</title>
     <meta name="description" content="Тест Freemarker">
 
+<style>
+    label {
+        color: red;
+    }
 
+    .div_style {
+        border: 1px solid #9fb5de;
+    }
+
+    div {
+        margin: 3px;
+    }
+</style>
 </head>
 <body>
 <h1>Тест Freemarker</h1>
@@ -27,7 +39,7 @@
             <option value="3">Вольнопосещающий</option>
         </select>
     </div>
-    <div>
+    <div class="div_style">
         <label>Принимаю условия соглашения</label>
         <input type="checkbox" name="commit">
     </div>
@@ -49,5 +61,13 @@
         <input type="submit" value="Отправить">
     </div>
 </form>
+
+<table width="300">
+    <#list table as r>
+    <tr>
+        <td>1</td><td>2</td><td>3</td>
+    </tr>
+    </#list>
+</table>
 </body>
 </html>
