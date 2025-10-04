@@ -7,13 +7,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/")
+@WebServlet("/index")
 public class IndexServlet extends HttpServlet {
     public void doGet(HttpServletRequest servletRequest,
                       HttpServletResponse servletResponse) throws ServletException, IOException {
         String form = """
                 <html>
                 <body>
+                <img src="/lab02/img/ico4.svg"/>
                 <form method='post' action='/lab02/test'>
                     <div>
                         <input type='text' name='param1'></input>
