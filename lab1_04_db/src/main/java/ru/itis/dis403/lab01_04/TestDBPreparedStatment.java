@@ -30,7 +30,8 @@ public class TestDBPreparedStatment {
             resultSet.close();
 
             statement.close();
-            connection.close();
+            if (connection != null && !connection.isClosed())
+                connection.close();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {
