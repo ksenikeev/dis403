@@ -2,8 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Крестики-нолики</title>
-    <meta name="description" content="Крестики-нолики">
+    <title>Самолеты</title>
+    <meta name="description" content="Самолеты">
 
 <style>
     .tablo {
@@ -21,24 +21,24 @@
 </style>
 </head>
 <body>
-<h1>Крестики-нолики</h1>
+<h1>Самолеты</h1>
 
 <div class="tablo">
     <div class="tablo-row">
-        <div>1</div>
-        <div>2</div>
-        <div>3</div>
+        <div class="tablo-head">Код самолёта</div>
+        <div class="tablo-head">Модель</div>
+        <div class="tablo-head">Дистанция</div>
+        <div class="tablo-head">Скорость</div>
     </div>
+
+    <#list airplanes as airplane>
     <div class="tablo-row">
-        <div class="tablo-head">1</div>
-        <div class="tablo-head">2</div>
-        <div class="tablo-head">3</div>
+        <div>${airplane.code}</div>
+        <div>${airplane.model}</div>
+        <div>${airplane.range}</div>
+        <div>${airplane.range}</div>
     </div>
-    <div class="tablo-row">
-        <div>1</div>
-        <div>2</div>
-        <div>3</div>
-    </div>
+    </#list>
 
 </div>
 </body>
