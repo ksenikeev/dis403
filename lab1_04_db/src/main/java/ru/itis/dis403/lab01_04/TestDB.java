@@ -11,37 +11,33 @@ public class TestDB {
             Connection connection =
                     DriverManager.getConnection(
                             // адрес БД , имя пользователя, пароль
-                            "jdbc:postgresql://localhost:5432/lab06","postgres","passwd");
+                            "jdbc:postgresql://localhost:5432/demo","postgres","passwd");
 
             Statement statement = connection.createStatement();
-            //Boolean result = statement.execute("create table users(id bigint primary key, name varchar(50))");
 
-            int count = statement.executeUpdate(
-                    "insert into users (id,name) values (3,'Misha')  ");
+            String sql = "select * from bookings.airplanes_data";
 
-
-            PreparedStatement preparedStatement =
-                    connection.prepareStatement("SELECT * FROM users where id= ? ");
-            preparedStatement.setLong(1, 1);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
-                System.out.println(resultSet.getLong("id"));
-                System.out.println(resultSet.getString("name"));
+                System.out.print(resultSet.getString("airplane_code") + ";");
+                System.out.print(resultSet.getString("model") + ";");
+                System.out.print(resultSet.getString("range") + ";");
+                System.out.println(resultSet.getString("speed"));
             }
 
             resultSet.close();
-            System.out.println(count);
+
+            String sqlInsert = "insert into bookings.airplanes_data  "
+                    + "(airplane_code, model, range, speed) values "
+                    + "('U22', '{\"en\":\"Sukhoy S100\", \"ru\":\"СУ S100\"}'::jsonb, 5000, 850)";
+
             statement.close();
             connection.close();
-
-
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 }
