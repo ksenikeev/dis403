@@ -32,6 +32,12 @@ public class TestDB {
                     + "(airplane_code, model, range, speed) values "
                     + "('U22', '{\"en\":\"Sukhoy S100\", \"ru\":\"СУ S100\"}'::jsonb, 5000, 850)";
 
+            String sqlUpdate = "update bookings.airplanes_data set speed = 900 where airplane_code = 'U22'";
+
+            String sqlDelete = "delete from bookings.airplanes_data where airplane_code = 'U22'";
+
+            statement.executeUpdate(sqlDelete);
+
             statement.close();
             connection.close();
         } catch (ClassNotFoundException e) {
