@@ -13,5 +13,8 @@
 
 <div>${sessionId}</div>
 
+<div>${username}</div>
+
+
 </body>
 </html>
