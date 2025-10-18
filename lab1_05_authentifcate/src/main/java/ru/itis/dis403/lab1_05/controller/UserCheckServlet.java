@@ -30,6 +30,8 @@ public class UserCheckServlet extends HttpServlet {
             // select id, username, password from users where username = ? ;
 
             if (username.equals("admin") && password.equals("admin")) {
+                session = request.getSession(true);
+                session.setAttribute("user", username);
                 resource = "/index.ftlh";
             } else {
                 request.setAttribute("errormessage", "Неверное имя пользователя или пароль!");
