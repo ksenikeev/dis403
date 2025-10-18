@@ -23,16 +23,22 @@ public class TestSessionServlet extends HttpServlet {
         boolean flag = false;
 
         Cookie[] cookies = request.getCookies();
-        for (Cookie c : cookies) {
-            if (c.getName().equals("JSESSIONID")) {
-                request.setAttribute("sessionId", c.getValue());
-                flag = true;
-                break;
+        if (cookies != null) {
+            for (Cookie c : cookies) {
+                if (c.getName().equals("JSESSIONID")) {
+                    request.setAttribute("sessionId", c.getValue());
+                    flag = true;
+                    break;
+                }
             }
         }
 
+
+
         if (!flag) {
             request.setAttribute("sessionId", "JSESSIONID не нашли");
+            Cookie cookie = new Cookie("JSESSIONID", "123");
+            response.addCookie(cookie);
         }
 
         request.getRequestDispatcher("/session.ftlh")
