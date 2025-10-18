@@ -8,6 +8,8 @@
 </head>
 <body>
 
+<div style="color:red">${errormessage!}</div>
+
 <form action="/auth/usercheck" method="post">
     <div>
         <label>Имя пользователя</label>
