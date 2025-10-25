@@ -1,10 +1,15 @@
 package ru.itis.dis403.lab1_06.repository;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import ru.itis.dis403.lab1_06.controllers.RegistrationServlet;
 import ru.itis.dis403.lab1_06.model.User;
 
 import java.sql.*;
 
 public class UserRepository {
+
+    final static Logger logger = LogManager.getLogger(UserRepository.class);
 
     public void addUser(User user) throws Exception {
         Connection connection = DbConnection.getConnection();
@@ -12,7 +17,9 @@ public class UserRepository {
 
         PreparedStatement statement =
                 connection.prepareStatement("select id from nextval('user_seq') as id");
-        ResultSet resultSet = statement.getResultSet();
+
+        ResultSet resultSet = statement.executeQuery();
+
         Long id = null;
         if (resultSet.next()) {
             id = resultSet.getLong("id");

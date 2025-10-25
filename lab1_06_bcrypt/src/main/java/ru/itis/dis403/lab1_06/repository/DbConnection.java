@@ -2,13 +2,15 @@ package ru.itis.dis403.lab1_06.repository;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DbConnection {
+
+    final static Logger logger = LogManager.getLogger(DbConnection.class);
 
     private static DataSource dataSource;
 
@@ -23,10 +25,12 @@ public class DbConnection {
         config.setMaximumPoolSize(10);
         dataSource = new HikariDataSource(config);
 
+        logger.debug("dataSource создался успешно");
     }
 
     public static Connection getConnection() throws SQLException, ClassNotFoundException {
         if (dataSource != null) {
+            logger.debug("отдаем подключение");
             return dataSource.getConnection();
         } else {
             try {
