@@ -20,6 +20,12 @@ public class UserRepository {
         resultSet.close();
         statement.close();
 
+        if (id != null) {
+            user.setId(id);
+        } else {
+            throw new Exception("Не удалось присвоить идентификатор!");
+        }
+
         statement = connection.prepareStatement(
                 "insert into users (id, username, hashpassword) values (?, ?, ?)");
         statement.setLong(1, id);
