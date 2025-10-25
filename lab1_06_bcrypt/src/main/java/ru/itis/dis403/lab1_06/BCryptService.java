@@ -23,14 +23,20 @@ public class BCryptService {
 
     public static void main(String[] args) {
         BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
-        //System.out.println(bCrypt.encode("password"));
+        System.out.println(bCrypt.encode("admin"));
 
+        // Тестируем строку на соответствие хешу
+        System.out.println(bCrypt.matches(
+                "admin",
+                "$2a$10$MneQSkX127jqHdVADCq9u.8OnCPlcr./Kae2ZpavTu6t9TlV1sNv6"
+        ));
+
+/*
         System.out.println(bCrypt.matches(
                 "password1",
                 "$2a$10$eVd7gUyIfgYKYWW0/eUwoek9h1LqwMXDgzPK7liSY79CtzPCDjTNi"
         ));
 
-/*
         String salt = BCrypt.gensalt(10);
         System.out.println(salt);
         String hash = BCrypt.hashpw("password", salt);
