@@ -10,7 +10,7 @@
 
 <div style="color:red">${errormessage!}</div>
 
-<form action="/auth/usercheck" method="post">
+<form action="/reg/usercheck" method="post">
     <div>
         <label>Имя пользователя</label>
         <input type="text" name="username">
