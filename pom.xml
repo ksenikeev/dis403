@@ -7,6 +7,10 @@
     <groupId>ru.itis.dis403</groupId>
     <artifactId>dis403</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>lab1_06_bcrypt</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>19</maven.compiler.source>
