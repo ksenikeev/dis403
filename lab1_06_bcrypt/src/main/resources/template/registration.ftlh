@@ -17,7 +17,7 @@
     </div>
     <div>
         <label>Имя</label>
-        <input type="text" name="firsttname">
+        <input type="text" name="firstname">
     </div>
     <div>
         <label>Телефон</label>
