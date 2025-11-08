@@ -33,4 +33,26 @@ public class CityRepository {
         return result;
     }
 
+    public City findById(Long id) throws Exception {
+        City result = null;
+
+        Connection connection = DbConnection.getConnection();
+
+        PreparedStatement statement = connection.prepareStatement(
+                "select id, name, comment from city where id = ?");
+        statement.setLong(1, id);
+        ResultSet resultSet = statement.executeQuery();
+        if (resultSet.next()) {
+            result = new City(
+                    resultSet.getLong("id"),
+                    resultSet.getString("name"),
+                    resultSet.getString("comment")
+                    );
+        }
+        resultSet.close();
+        statement.close();
+        connection.close();
+
+        return result;
+    }
 }
