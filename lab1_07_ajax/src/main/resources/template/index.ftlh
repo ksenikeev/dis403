@@ -20,6 +20,18 @@
 </style>
 </head>
 <body>
-<h1>Поздравляем ${user!}, вы свой!</h1>
+<h1>Тест AJAX</h1>
+
+<form action="/testajax" >
+    <div>
+    <select id="city" name="city">
+        <#list cities as city>
+        <option value="${city.id}">${city.name}</option>
+        </#list>
+    </select>
+    </div>
+    <div><input type="submit" value="Отправить"></div>
+</form>
+
 </body>
 </html>
