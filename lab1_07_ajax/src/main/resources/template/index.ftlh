@@ -24,7 +24,7 @@
 
 <form action="/testajax" >
     <div>
-    <select id="city" name="city">
+    <select id="city" name="city" onchange="change_city()">
         <#list cities as city>
         <option value="${city.id}">${city.name}</option>
         </#list>
@@ -32,6 +32,15 @@
     </div>
     <div><input type="submit" value="Отправить"></div>
 </form>
+
+<script>
+    function change_city() {
+        let city = document.getElementById("city");
+        console.log(city);
+        selectedOption = city.options[city.selectedIndex];
+        console.log(selectedOption.text + ', ' + selectedOption.value);
+    }
+</script>
 
 </body>
 </html>
