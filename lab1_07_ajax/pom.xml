@@ -46,7 +46,7 @@
     </dependencies>
 
     <build>
-        <finalName>reg</finalName>
+        <finalName>ajax</finalName>
     </build>
 
 
