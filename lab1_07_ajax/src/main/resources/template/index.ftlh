@@ -62,13 +62,13 @@
             .then(json => {
                 console.log(json);
                 // чистим select
-                const streets = document.getElementById('street');
-                for(let i = streets.options.length – 1; i >= 0; i--)
+                const streets = document.getElementById("street");
+                for(let i = streets.options.length - 1; i >= 0; i--)
                 { streets.options[i].remove(); }
                 // добавляем option
                 json.streets.forEach(optionData => {
                   let option = document.createElement("option");
-                  option.textContent = optionData.text;
+                  option.textContent = optionData;
                   //option.value = optionData.value;
                   // добавляем в <select id="streets">
                   streets.appendChild(option);
