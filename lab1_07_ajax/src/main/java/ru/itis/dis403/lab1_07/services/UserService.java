@@ -1,4 +1,4 @@
-package ru.itis.dis403.lab1_06.services;
+package ru.itis.dis403.lab1_07.services;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.itis.dis403.lab1_06.model.User;

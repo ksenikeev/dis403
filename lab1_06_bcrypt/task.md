@@ -10,6 +10,8 @@ userinfo (id, lastname, firstname, phone)
 ищем по username -> hashpassword
    bCrypt.matches(password, hashpassword);
 
+   если проверка прошла - select from users join userinfo -> User -> сессия 
+
 3. useradd
    (username, password, lastname, firstname, phone)
     transaction {

@@ -54,4 +54,41 @@ public class UserRepository {
         connection.close();
     }
 
+    public String getUserPasswordHash(String userName) throws Exception {
+        String result = null;
+        Connection connection = DbConnection.getConnection();
+
+        PreparedStatement statement = connection.prepareStatement(
+                "select hashpassword from users where username = ?");
+        statement.setString(1, userName);
+        ResultSet resultSet = statement.executeQuery();
+        if (resultSet.next()) {
+           result = resultSet.getString("hashpassword");
+        }
+        resultSet.close();
+        statement.close();
+        connection.close();
+
+        return result;
+    }
+
+    public User getUserByUserName(String userName) throws Exception {
+        String result = null;
+        Connection connection = DbConnection.getConnection();
+
+        PreparedStatement statement = connection.prepareStatement(
+                "select id, username, userrole, lastname, firstname, phone" +
+                        " from users natural join userinfo  where username = ?");
+        statement.setString(1, userName);
+        ResultSet resultSet = statement.executeQuery();
+        if (resultSet.next()) {
+            result = resultSet.getString("hashpassword");
+        }
+        resultSet.close();
+        statement.close();
+        connection.close();
+
+        return result;
+    }
+
 }
