@@ -3,6 +3,7 @@ package ru.itis.dis403.lab1_08.ball.client;
 import javax.swing.*;
 import java.awt.*;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
@@ -28,12 +29,14 @@ public class GComponentClient extends JComponent {
 
         new Thread(() -> {
             while (true) {
-                DataInputStream dis = null;
                 try {
-                    dis = new DataInputStream(socket.getInputStream());
+                    DataInputStream dis = new DataInputStream(socket.getInputStream());
                     bYS = dis.readInt();
                     x = dis.readInt();
                     y = dis.readInt();
+                    DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+                    dos.writeInt(bYC);
+
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

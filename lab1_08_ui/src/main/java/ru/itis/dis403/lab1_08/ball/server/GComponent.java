@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -76,6 +77,8 @@ public class GComponent extends JComponent{
                     dos.writeInt(bYS);
                     dos.writeInt(x);
                     dos.writeInt(y);
+                    DataInputStream dis = new DataInputStream(clientSocket.getInputStream());
+                    bYC = dis.readInt();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
