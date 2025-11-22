@@ -1,4 +1,4 @@
-package ru.itis.dis403.lab1_08.ball;
+package ru.itis.dis403.lab1_08.ball.client;
 
 
 import javax.swing.*;
