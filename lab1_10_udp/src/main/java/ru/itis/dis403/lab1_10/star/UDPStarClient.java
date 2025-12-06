@@ -1,9 +1,7 @@
 package ru.itis.dis403.lab1_10.star;
 
 // UDPClient.java
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -74,34 +72,23 @@ public class UDPStarClient {
 
                         try {
                             socket.receive(receivePacket);
-                            String response = new String(
-                                    receivePacket.getData(),
-                                    0,
-                                    receivePacket.getLength()
+
+                            DataInputStream dis = new DataInputStream(
+                                    new ByteArrayInputStream(receivePacket.getData())
                             );
-                            System.out.println("Ответ от сервера: " + response);
+
+                            int size = dis.readInt();
+                            byte[] msg = new byte[size];
+                            dis.read(msg);
+
+                            System.out.println("Ответ от сервера: " + new String(msg, StandardCharsets.UTF_8));
                         } catch (SocketTimeoutException e) {
                             System.out.println("Превышено время ожидания ответа от сервера");
                         }
+                        break;
                     }
-
                 }
 
-                // Отправляем сообщение серверу
-                byte[] sendData = message.getBytes();
-                DatagramPacket sendPacket = new DatagramPacket(
-                        sendData,
-                        sendData.length,
-                        serverAddress,
-                        SERVER_PORT
-                );
-
-                socket.send(sendPacket);
-                System.out.println("Сообщение отправлено серверу");
-
-                // Получаем ответ от сервера
-
-                System.out.println();
             }
 
             scanner.close();
