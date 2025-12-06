@@ -9,7 +9,7 @@ import java.net.SocketTimeoutException;
 import java.util.Scanner;
 
 public class UDPClient {
-    private static final String SERVER_ADDRESS = "localhost";
+    private static final String SERVER_ADDRESS = "itislabs.ru";
     private static final int SERVER_PORT = 50000;
     private static final int TIMEOUT = 5000; // 5 секунд
     private static final int BUFFER_SIZE = 4096;

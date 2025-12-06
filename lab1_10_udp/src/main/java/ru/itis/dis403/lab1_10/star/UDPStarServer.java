@@ -1,16 +1,15 @@
 package ru.itis.dis403.lab1_10.star;
 
 // UDPServer.java
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
-import java.io.IOException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class UDPStarServer {
@@ -71,7 +70,7 @@ public class UDPStarServer {
         byte msgType = dis.readByte();
 
         switch (msgType) {
-            case 0 :
+            case 0:
                 int length = dis.readInt();
                 byte[] buf = new byte[length];
                 dis.read(buf, 0, length);
@@ -80,19 +79,32 @@ public class UDPStarServer {
                         receivePacket.getAddress(), receivePacket.getPort()));
                 System.out.println("Добавили клиента " + name);
                 break;
+            case 1:
+                ObjectMapper mapper = new ObjectMapper();
+                String message = mapper.writeValueAsString(clients);
+                byte[] dataMessage = message.getBytes(StandardCharsets.UTF_8);
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                bos.write(writeInt(dataMessage.length));
+                bos.write(dataMessage);
 
+                DatagramPacket sendPacket = new DatagramPacket(
+                        bos.toByteArray(),
+                        bos.toByteArray().length,
+                        receivePacket.getAddress(),
+                        receivePacket.getPort());
+                socket.send(sendPacket);
+                break;
         }
+    }
 
-        // Отправляем ответ клиенту
-        byte[] responseData = response.getBytes();
-        DatagramPacket sendPacket = new DatagramPacket(
-                responseData,
-                responseData.length,
-                clientAddress,
-                clientPort
-        );
-
-        socket.send(sendPacket);
+    private byte[] writeInt(int i) {
+        byte[] result = {
+                (byte)((i >>> 24) & 0xFF),
+                (byte)((i >>> 16) & 0xFF),
+                (byte)((i >>> 8) & 0xFF),
+                (byte)(i & 0xFF)
+        };
+        return result;
     }
 
     public static void main(String[] args) {
