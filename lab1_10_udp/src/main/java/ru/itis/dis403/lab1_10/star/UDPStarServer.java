@@ -21,6 +21,7 @@ public class UDPStarServer {
     private List<ClientData> clients;
 
     private boolean running;
+    private volatile int nextClientId = 1;
     private byte[] buffer = new byte[BUFFER_SIZE];
 
     public UDPStarServer() {
@@ -51,7 +52,7 @@ public class UDPStarServer {
                 int clientPort = receivePacket.getPort();
 
                 // Обрабатываем сообщение
-                processMessage(receivePacket.getData(), socket);
+                processMessage(receivePacket);
 
 
             } catch (IOException e) {
@@ -63,8 +64,9 @@ public class UDPStarServer {
         System.out.println("Сервер остановлен");
     }
 
-    private void processMessage(byte[] data, DatagramSocket socket) throws IOException {
+    private void processMessage(DatagramPacket receivePacket) throws IOException {
 
+        byte[] data = receivePacket.getData();
         DataInputStream dis = new DataInputStream(new ByteArrayInputStream(data));
         byte msgType = dis.readByte();
 
@@ -74,6 +76,10 @@ public class UDPStarServer {
                 byte[] buf = new byte[length];
                 dis.read(buf, 0, length);
                 String name = new String(buf, StandardCharsets.UTF_8);
+                clients.add(new ClientData(nextClientId++, name,
+                        receivePacket.getAddress(), receivePacket.getPort()));
+                System.out.println("Добавили клиента " + name);
+                break;
 
         }
 
