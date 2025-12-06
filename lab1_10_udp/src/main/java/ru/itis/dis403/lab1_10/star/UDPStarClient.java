@@ -26,9 +26,42 @@ public class UDPStarClient {
             System.out.println("UDP клиент запущен");
             System.out.println("Подключение к серверу: " + SERVER_ADDRESS + ":" + SERVER_PORT);
             System.out.println("Введите 'exit' для выхода");
-            System.out.println("Доступные команды: hello, list");
+            System.out.println("Доступные команды: hello, list, message");
             System.out.println("------------------------------------------");
 
+            // параллельный процесс прослушивания сервера
+            new Thread(() -> {
+                byte[] receiveData = new byte[BUFFER_SIZE];
+                DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+
+                try {
+                    socket.receive(receivePacket);
+
+                    DataInputStream dis = new DataInputStream(
+                            new ByteArrayInputStream(receivePacket.getData())
+                    );
+
+                    byte typeMessage = dis.readByte();
+                    int clientId = 0;
+                    if (typeMessage == 2) {
+                        clientId = dis.readInt();
+                    }
+                    int size = dis.readInt();
+                    byte[] msg = new byte[size];
+                    dis.read(msg);
+
+                    System.out.println("Ответ от сервера: " + typeMessage + ": "
+                            + clientId + ":"
+                            + new String(msg, StandardCharsets.UTF_8));
+                } catch (SocketTimeoutException e) {
+                    System.out.println("Превышено время ожидания ответа от сервера");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }).start();
+
+            // опрос ввода с консоли
             while (true) {
                 System.out.print("Введите сообщение: ");
                 String message = scanner.nextLine();
@@ -67,24 +100,28 @@ public class UDPStarClient {
 
                         socket.send(sendPacket);
 
-                        byte[] receiveData = new byte[BUFFER_SIZE];
-                        DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+                        break;
+                    }
+                    case "message": {
+                        System.out.println("введите id получателя:");
+                        int id = scanner.nextInt();
+                        System.out.println("введите сообщение:");
+                        String msg = scanner.nextLine();
 
-                        try {
-                            socket.receive(receivePacket);
+                        byte[] data = msg.getBytes(StandardCharsets.UTF_8);
+                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                        bos.write(2);
+                        bos.write(writeInt(id));
+                        bos.write(writeInt(data.length));
+                        bos.write(data);
 
-                            DataInputStream dis = new DataInputStream(
-                                    new ByteArrayInputStream(receivePacket.getData())
-                            );
-
-                            int size = dis.readInt();
-                            byte[] msg = new byte[size];
-                            dis.read(msg);
-
-                            System.out.println("Ответ от сервера: " + new String(msg, StandardCharsets.UTF_8));
-                        } catch (SocketTimeoutException e) {
-                            System.out.println("Превышено время ожидания ответа от сервера");
-                        }
+                        DatagramPacket sendPacket = new DatagramPacket(
+                                bos.toByteArray(),
+                                bos.size(),
+                                serverAddress,
+                                SERVER_PORT
+                        );
+                        socket.send(sendPacket);
                         break;
                     }
                 }
