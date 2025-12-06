@@ -11,6 +11,7 @@ import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class UDPStarServer {
     private static final int PORT = 50000;
@@ -70,7 +71,7 @@ public class UDPStarServer {
         byte msgType = dis.readByte();
 
         switch (msgType) {
-            case 0:
+            case 0: {
                 int length = dis.readInt();
                 byte[] buf = new byte[length];
                 dis.read(buf, 0, length);
@@ -79,11 +80,13 @@ public class UDPStarServer {
                         receivePacket.getAddress(), receivePacket.getPort()));
                 System.out.println("Добавили клиента " + name);
                 break;
-            case 1:
+            }
+            case 1: {
                 ObjectMapper mapper = new ObjectMapper();
                 String message = mapper.writeValueAsString(clients);
                 byte[] dataMessage = message.getBytes(StandardCharsets.UTF_8);
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                bos.write((byte) 1); // отвечаем на команду "1"
                 bos.write(writeInt(dataMessage.length));
                 bos.write(dataMessage);
 
@@ -94,6 +97,37 @@ public class UDPStarServer {
                         receivePacket.getPort());
                 socket.send(sendPacket);
                 break;
+            }
+            case 2: {
+                /*
+                    1. команда (2) | int - id игрока | int - длина сообщения | сообщение
+                 */
+                int id = dis.readInt();
+                int size = dis.readInt();
+                byte[] msg = new byte[size];
+                dis.read(msg);
+
+                Optional<ClientData> otherClient = clients.stream()
+                        .filter(c -> c.getId() == id).findFirst();
+                if (otherClient.isPresent()) {
+                    ClientData client = otherClient.get();
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    bos.write((byte) 2); // отвечаем на команду "2"
+                    bos.write(writeInt(1)); // здесь надо найти клиента-отправителя
+                    bos.write(writeInt(msg.length));
+                    bos.write(msg);
+
+                    DatagramPacket sendPacket = new DatagramPacket(
+                            bos.toByteArray(),
+                            bos.size(),
+                            client.getClientAddress(),
+                            client.getClientPort());
+                    socket.send(sendPacket);
+                } else {
+                    //здесь надо ответить, что не нашли клиента-получателя
+                }
+                break;
+            }
         }
     }
 

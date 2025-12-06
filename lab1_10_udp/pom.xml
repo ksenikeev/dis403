@@ -67,7 +67,7 @@
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
                             <mainClass>
-                                ru.itis.dis403.lab1_10.udp.UDPServer
+                                ru.itis.dis403.lab1_10.star.UDPStarServer
                             </mainClass>
                         </manifest>
                     </archive>
