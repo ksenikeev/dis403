@@ -97,13 +97,12 @@ public class UDPStarServer {
         }
     }
 
-    private byte[] writeInt(int i) {
-        byte[] result = {
-                (byte)((i >>> 24) & 0xFF),
-                (byte)((i >>> 16) & 0xFF),
-                (byte)((i >>> 8) & 0xFF),
-                (byte)(i & 0xFF)
-        };
+    private byte[] writeInt(int value) {
+        byte[] result = new byte[4];
+        result[0] = (byte) (value >> 24);
+        result[1] = (byte) (value >> 16);
+        result[2] = (byte) (value >> 8);
+        result[3] = (byte) value;
         return result;
     }
 

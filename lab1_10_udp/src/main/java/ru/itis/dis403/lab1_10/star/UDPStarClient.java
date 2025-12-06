@@ -18,7 +18,7 @@ public class UDPStarClient {
     private static final int BUFFER_SIZE = 4096;
 
     public static void main(String[] args) {
-/*
+
         try (DatagramSocket socket = new DatagramSocket()) {
             socket.setSoTimeout(TIMEOUT);
 
@@ -108,24 +108,21 @@ public class UDPStarClient {
         } catch (IOException e) {
             System.err.println("Ошибка клиента: " + e.getMessage());
         }
-*/
-        int i = 10223234;
-        System.out.println(readInt(writeInt(i)));
     }
 
-    private static byte[] writeInt(int i) {
-        byte[] result = {
-                (byte)((i >>> 24) & 0xFF),
-                (byte)((i >>> 16) & 0xFF),
-                (byte)((i >>> 8) & 0xFF),
-                (byte)(i & 0xFF)
-        };
-        return result;
-    }
+    private static byte[] writeInt(int value) {
+        byte[] result = new byte[4];
+        result[0] = (byte) (value >> 24);
+        result[1] = (byte) (value >> 16);
+        result[2] = (byte) (value >> 8);
+        result[3] = (byte) value;
+        return result;    }
 
-    private static int readInt(byte[] data) {
-        return  (data[0] << 24) | (data[1] << 16) | (data[2] << 8) | ((int)data[3]);
-
+    private static int readInt(byte[] bytes) {
+        return ((bytes[0] & 0xFF) << 24) |
+                ((bytes[1] & 0xFF) << 16) |
+                ((bytes[2] & 0xFF) << 8) |
+                (bytes[3] & 0xFF);
     }
 
 }
