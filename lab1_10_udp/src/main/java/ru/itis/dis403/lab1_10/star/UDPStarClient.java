@@ -18,7 +18,7 @@ public class UDPStarClient {
     public static void main(String[] args) {
 
         try (DatagramSocket socket = new DatagramSocket()) {
-            socket.setSoTimeout(TIMEOUT);
+            //socket.setSoTimeout(TIMEOUT);
 
             InetAddress serverAddress = InetAddress.getByName(SERVER_ADDRESS);
             Scanner scanner = new Scanner(System.in);
@@ -105,8 +105,10 @@ public class UDPStarClient {
                     case "message": {
                         System.out.println("введите id получателя:");
                         int id = scanner.nextInt();
-                        System.out.println("введите сообщение:");
+                        scanner.nextLine();
+                        System.out.println("введите сообщение получателю:" + id);
                         String msg = scanner.nextLine();
+                        System.out.println("Ввели " + msg);
 
                         byte[] data = msg.getBytes(StandardCharsets.UTF_8);
                         ByteArrayOutputStream bos = new ByteArrayOutputStream();
