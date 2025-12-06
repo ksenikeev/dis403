@@ -89,7 +89,7 @@ public class UDPStarServer {
 
                 DatagramPacket sendPacket = new DatagramPacket(
                         bos.toByteArray(),
-                        bos.toByteArray().length,
+                        bos.size(),
                         receivePacket.getAddress(),
                         receivePacket.getPort());
                 socket.send(sendPacket);
