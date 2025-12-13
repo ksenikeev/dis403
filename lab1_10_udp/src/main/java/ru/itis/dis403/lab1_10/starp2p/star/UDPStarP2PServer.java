@@ -1,9 +1,24 @@
-package ru.itis.dis403.lab1_10.star;
+package ru.itis.dis403.lab1_10.starp2p.star;
 
 // UDPServer.java
+/**
+    Протокол:
+    сообщение строится начиная с байта, описывающего тип сообщения
+    0: сообщение hello (команда (0) | int - длина сообщения | сообщение (имя игрока) [направление Клиент -> Сервер]
+    1: сообщение list - запрос списка игроков (без дополнительных параметров) [направление Клиент -> Сервер]
+    1: сообщение list - список игроков (команда (1) | int - длина сообщения | сообщение JSON массив с игроками) [направление Сервер -> Клиент]
+    2: выбор игрока (команда (2) | int - id игрока) [направление Клиент -> Сервер]
+    2: передача информации о другом игроке [направление Сервер -> Клиент]
+        (команда (2) | int - id игрока | int - port 2-го игрока | int - длина адреса 2-го игрока | адрес 2-го игрока строкой)
+        ответ рассылается обоим игрокам
+    3: передача сообщения другому игроку [направление Клиент -> Клиент]
+        (команда (3) | int - id игрока | int - длина сообщения | сообщение)
+ */
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -11,10 +26,9 @@ import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class UDPStarServer {
+public class UDPStarP2PServer {
     private static final int PORT = 50000;
     private static final int BUFFER_SIZE = 4096;
     private DatagramSocket socket;
@@ -25,7 +39,7 @@ public class UDPStarServer {
     private volatile AtomicInteger nextClientId = new AtomicInteger(1);// использовать только для инкремента
     private byte[] buffer = new byte[BUFFER_SIZE];
 
-    public UDPStarServer() {
+    public UDPStarP2PServer() {
         clients = new ArrayList<>();
         try {
             socket = new DatagramSocket(PORT);
@@ -77,8 +91,9 @@ public class UDPStarServer {
                 byte[] buf = new byte[length];
                 dis.read(buf, 0, length);
                 String name = new String(buf, StandardCharsets.UTF_8);
-                clients.add(new ClientData(nextClientId.getAndIncrement(), name, receivePacket.getAddress(), receivePacket.getPort()));
-                System.out.println("Добавили клиента " + name);
+                clients.add(new ClientData(nextClientId.getAndIncrement(), name, 
+                        receivePacket.getAddress(), receivePacket.getPort()));
+                System.out.println("Добавили клиента " + name + " : " + receivePacket.getAddress().getHostAddress() + ":" + receivePacket.getPort());
                 break;
             }
             case 1: { // сообщение list (запрос без параметров)
@@ -100,28 +115,51 @@ public class UDPStarServer {
             }
             case 2: {
                 /*
-                     команда (2) | int - id игрока | int - длина сообщения | сообщение
+                     команда (2) | int - id игрока |
+                     отвечаем (команда (2) | int - id игрока | int - port 2-го игрока | int - длина адреса 2-го игрока | адрес 2-го игрока строкой)
                  */
                 int id = dis.readInt();
-                int size = dis.readInt();
-                byte[] msg = new byte[size];
-                dis.read(msg);
 
-                Optional<ClientData> otherClient = clients.stream()
-                        .filter(c -> c.getId() == id).findFirst();
-                if (otherClient.isPresent()) {
-                    ClientData client = otherClient.get();
+                ClientData otherClient = clients.stream()
+                        .filter(c -> c.getId() == id).findFirst().orElse(null);
+                System.out.println("нашли другого клиента " + otherClient);
+                ClientData thisClient = clients.stream()
+                        .filter(c -> c.getClientAddress().equals(receivePacket.getAddress()) && c.getClientPort()==receivePacket.getPort())
+                        .findFirst().orElse(null);
+                System.out.println("нашли самого клиента " + thisClient);
+
+                // отвечаем обоим клиентам
+                if (otherClient != null && thisClient != null) {
+                    System.out.println("отвечаем другому клиенту");
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
                     bos.write((byte) 2); // отвечаем на команду "2"
-                    bos.write(writeInt(1)); // здесь надо найти клиента-отправителя
-                    bos.write(writeInt(msg.length));
-                    bos.write(msg);
+                    bos.write(writeInt(thisClient.getId())); //
+                    bos.write(writeInt(thisClient.getClientPort()));
+                    byte[] thisAddress = thisClient.getClientAddress().getHostAddress().getBytes();
+                    bos.write(writeInt(thisAddress.length));
+                    bos.write(thisAddress);
 
                     DatagramPacket sendPacket = new DatagramPacket(
                             bos.toByteArray(),
                             bos.size(),
-                            client.getClientAddress(),
-                            client.getClientPort());
+                            otherClient.getClientAddress(),
+                            otherClient.getClientPort());
+                    socket.send(sendPacket);
+
+                    System.out.println("отвечаем самому клиенту");
+                    bos = new ByteArrayOutputStream();
+                    bos.write((byte) 2); // отвечаем на команду "2"
+                    bos.write(writeInt(otherClient.getId())); //
+                    bos.write(writeInt(otherClient.getClientPort()));
+                    byte[] otherAddress = otherClient.getClientAddress().getHostAddress().getBytes();
+                    bos.write(writeInt(otherAddress.length));
+                    bos.write(otherAddress);
+
+                    sendPacket = new DatagramPacket(
+                            bos.toByteArray(),
+                            bos.size(),
+                            thisClient.getClientAddress(),
+                            thisClient.getClientPort());
                     socket.send(sendPacket);
                 } else {
                     //здесь надо ответить, что не нашли клиента-получателя
@@ -141,7 +179,7 @@ public class UDPStarServer {
     }
 
     public static void main(String[] args) {
-        UDPStarServer server = new UDPStarServer();
+        UDPStarP2PServer server = new UDPStarP2PServer();
         server.start();
     }
 }
