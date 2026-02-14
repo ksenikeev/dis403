@@ -1,0 +1,23 @@
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/lab1_01/pom.xml" />
+        <option value="$PROJECT_DIR$/lab1_01_httpserver/pom.xml" />
+        <option value="$PROJECT_DIR$/lab1_02_servlet/pom.xml" />
+        <option value="$PROJECT_DIR$/lab1_03/pom.xml" />
+        <option value="$PROJECT_DIR$/lab1_04_db/pom.xml" />
+        <option value="$PROJECT_DIR$/lab1_05_authentifcate/pom.xml" />
+        <option value="$PROJECT_DIR$/lab1_07_ajax/pom.xml" />
+        <option value="$PROJECT_DIR$/lab1_08_ui/pom.xml" />
+        <option value="$PROJECT_DIR$/lab1_09_ui_components/pom.xml" />
+        <option value="$PROJECT_DIR$/lab1_10_udp/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_24" default="true" project-jdk-name="24" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>
