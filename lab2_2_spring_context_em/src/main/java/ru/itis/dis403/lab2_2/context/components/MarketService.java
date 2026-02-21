@@ -6,7 +6,7 @@ import ru.itis.dis403.lab2_2.context.model.Market;
 import ru.itis.dis403.lab2_2.context.model.Order;
 import java.util.NoSuchElementException;
 
-@Component
+//@Component
 public class MarketService {
     private final Market market;
 
