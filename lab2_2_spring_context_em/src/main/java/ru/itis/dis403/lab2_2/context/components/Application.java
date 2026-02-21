@@ -6,7 +6,7 @@ import ru.itis.dis403.lab2_2.context.model.Order;
 import ru.itis.dis403.lab2_2.context.model.Product;
 import java.math.BigDecimal;
 
-@Component
+@Component("App")
 public class Application {
 
     private final MarketService service;

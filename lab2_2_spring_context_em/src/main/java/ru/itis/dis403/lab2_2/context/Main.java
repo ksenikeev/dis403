@@ -10,7 +10,8 @@ public class Main {
         ApplicationContext context =
                 new AnnotationConfigApplicationContext(Config.class);
 
-        context.getBean(Application.class).run();
+        //context.getBean(Application.class).run();
+        ((Application)context.getBean("App")).run();
 
     }
 }
