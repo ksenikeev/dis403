@@ -1,0 +1,7 @@
+dbconfig:
+    jdbcdriver: org.postgresql.Driver
+    jdbcurl: jdbc:postgresql://localhost:5432/model
+    dbuser: postgres
+    dbpassword: postgres
+    poolsize: 10
+    ddloption: create # create, none
