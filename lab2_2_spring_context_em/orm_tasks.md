@@ -11,6 +11,7 @@
 class Country {
     @Id
     Long id;
+    @Column
     String name;
 }
 
@@ -18,6 +19,7 @@ class Country {
 class City {
     @Id
     Long id;
+    @Column
     String name;
     @ManyToOne
     Country country;
