@@ -9,7 +9,7 @@ import static jakarta.persistence.InheritanceType.JOINED;
 //@Getter@Setter
 @Entity
 @Inheritance(strategy = JOINED)
-class Person {
+public class Person {
 
     @Id
     protected Long id;
