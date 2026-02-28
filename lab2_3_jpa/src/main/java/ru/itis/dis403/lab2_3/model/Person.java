@@ -4,17 +4,41 @@ import lombok.Getter;
 import lombok.Setter;
 import jakarta.persistence.*;
 
-import static jakarta.persistence.InheritanceType.JOINED;
+import java.util.Set;
+
+import static jakarta.persistence.InheritanceType.*;
 
 //@Getter@Setter
 @Entity
-@Inheritance(strategy = JOINED)
+@Inheritance(strategy = TABLE_PER_CLASS)
 public class Person {
 
     @Id
     protected Long id;
 
     protected String name;
+
+    @ManyToOne
+    protected Phone phone;
+
+    @ManyToMany
+    protected Set<Phone> phones;
+
+    public Phone getPhone() {
+        return phone;
+    }
+
+    public void setPhone(Phone phone) {
+        this.phone = phone;
+    }
+
+    public Set<Phone> getPhones() {
+        return phones;
+    }
+
+    public void setPhones(Set<Phone> phones) {
+        this.phones = phones;
+    }
 
     public Long getId() {
         return id;

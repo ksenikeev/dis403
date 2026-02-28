@@ -11,6 +11,7 @@ public class Main {
         EntityManagerFactory emf
             = Persistence.createEntityManagerFactory("lab2_3");
 
+/*
         Admin admin = new Admin();
         admin.setId(5l);
         admin.setName("admin1");
@@ -35,6 +36,7 @@ public class Main {
 
         transaction.commit();
         entityManager.close();
+*/
         emf.close();
     }
 }

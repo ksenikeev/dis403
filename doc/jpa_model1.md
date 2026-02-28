@@ -267,3 +267,6 @@ CONSTRAINT client_pkey PRIMARY KEY (id)
             <artifactId>hibernate-core</artifactId>
             <version>6.6.13.Final</version>
         </dependency>
+
+@Inheritance(strategy =SINGLE_TABLE)
+@Inheritance(strategy = TABLE_PER_CLASS)
