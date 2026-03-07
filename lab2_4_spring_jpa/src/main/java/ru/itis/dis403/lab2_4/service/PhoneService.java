@@ -2,8 +2,8 @@ package ru.itis.dis403.lab2_4.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.itis.dis403.lab2_3.model.Phone;
-import ru.itis.dis403.lab2_3.repository.PhoneRepository;
+import ru.itis.dis403.lab2_4.model.Phone;
+import ru.itis.dis403.lab2_4.repository.PhoneRepository;
 
 import java.util.List;
 

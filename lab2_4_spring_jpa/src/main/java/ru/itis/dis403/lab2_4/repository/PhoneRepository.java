@@ -3,7 +3,7 @@ package ru.itis.dis403.lab2_4.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import ru.itis.dis403.lab2_3.model.Phone;
+import ru.itis.dis403.lab2_4.model.Phone;
 
 import java.util.List;
 
