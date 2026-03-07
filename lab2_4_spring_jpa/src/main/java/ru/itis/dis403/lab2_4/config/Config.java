@@ -16,10 +16,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 import java.util.Properties;
 
+/*
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories("ru.itis.dis403.lab2_4.repository")
 @ComponentScan("ru.itis.dis403.lab2_4")
+*/
 public class Config {
 
     @Bean

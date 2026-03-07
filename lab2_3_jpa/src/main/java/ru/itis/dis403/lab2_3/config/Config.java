@@ -20,7 +20,7 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories("ru.itis.dis403.lab2_3.repository")
-@ComponentScan("ru.itis.dis403.lab2_4")
+@ComponentScan("ru.itis.dis403.lab2_3")
 public class Config {
 
     @Bean

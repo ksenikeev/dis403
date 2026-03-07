@@ -22,6 +22,8 @@ public class Person {
     @ManyToOne
     protected Phone phone;
 
+
+
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     protected Set<Phone> phones = new HashSet<>();
 
