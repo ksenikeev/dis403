@@ -26,6 +26,14 @@ public class Phone {
         return Objects.hash(id, number);
     }
 
+    @Override
+    public String toString() {
+        return "Phone{" +
+                "id=" + id +
+                ", number='" + number + '\'' +
+                '}';
+    }
+
     public String getNumber() {
         return number;
     }

@@ -1,42 +1,32 @@
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
-import ru.itis.dis403.lab2_3.model.Admin;
-import ru.itis.dis403.lab2_3.model.Client;
+import jakarta.persistence.*;
 import ru.itis.dis403.lab2_3.model.Person;
+
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         EntityManagerFactory emf
             = Persistence.createEntityManagerFactory("lab2_3");
 
-/*
-        Admin admin = new Admin();
-        admin.setId(5l);
-        admin.setName("admin1");
-        admin.setEmail("asd@awd");
-
-        Client client = new Client();
-        client.setId(6l);
-        client.setName("client2");
-        client.setAddress("addr");
-
-        Person person = new Person();
-        person.setId(7l);
 
         EntityManager entityManager = emf.createEntityManager();
 
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
+        //EntityTransaction transaction = entityManager.getTransaction();
+        //transaction.begin();
+        // Извлечем всех Person
+        List<Person> persons = entityManager
+                .createQuery("select p from Person p where p.id = 11")
+                        .getResultList();
 
-        entityManager.persist(admin);
-        entityManager.persist(client);
-        entityManager.persist(person);
+        persons.forEach(System.out::println);
 
-        transaction.commit();
+        if (persons != null && !persons.isEmpty()) {
+            persons.get(0).getPhones().forEach(System.out::println);
+        }
+
         entityManager.close();
-*/
+        //transaction.commit();
+
         emf.close();
     }
 }

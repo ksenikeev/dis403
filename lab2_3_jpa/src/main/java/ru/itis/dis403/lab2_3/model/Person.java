@@ -4,13 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import static jakarta.persistence.InheritanceType.*;
 
 //@Getter@Setter
 @Entity
-@Inheritance(strategy = TABLE_PER_CLASS)
+@Inheritance(strategy = JOINED)
 public class Person {
 
     @Id
@@ -21,8 +22,8 @@ public class Person {
     @ManyToOne
     protected Phone phone;
 
-    @ManyToMany
-    protected Set<Phone> phones;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    protected Set<Phone> phones = new HashSet<>();
 
     public Phone getPhone() {
         return phone;
@@ -54,5 +55,15 @@ public class Person {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return
+                this.getClass().getSimpleName() + "{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", phone=" + phone +
+                '}';
     }
 }
