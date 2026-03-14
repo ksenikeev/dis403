@@ -73,3 +73,19 @@ org.springframework.core.codec, org.springframework.http, org.springframework.we
 - sql
 
 org.springframework.jdbc.core, org.hibernate.SQL, org.jooq.tools.LoggerListener
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-logging</artifactId>
+</dependency>
+```
+
+```
+logging.level.root=warn
+logging.level.org.springframework.web=debug
+logging.level.org.hibernate=error
+logging.level.ru.itis.dis403=debug
+
+logging.file.path=logs
+logging.pattern.file= %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%
+```
