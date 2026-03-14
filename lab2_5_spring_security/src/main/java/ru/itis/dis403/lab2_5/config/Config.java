@@ -48,7 +48,7 @@ public class Config {
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("ru.itis.dis403.lab2_4.model");
+        factory.setPackagesToScan("ru.itis.dis403.lab2_5.model");
         factory.setDataSource(dataSource());
         factory.setJpaProperties(additionalProperties());
         return factory;
