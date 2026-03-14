@@ -3,12 +3,12 @@ package ru.itis.dis403.lab2_5.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.Table;
+import lombok.*;
 
-@Getter@Setter@Builder
+@Getter@Setter
 @Entity
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue
