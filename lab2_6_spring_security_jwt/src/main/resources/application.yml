@@ -5,11 +5,11 @@ server:
 
 jwt:
   secret: secretikkhsd8ouu1234128937918912318768723694688123487678123    #${JWT_SECRET}
-  expiration: 86400000 # 1 сутки
+  expiration: 86400000 # 1 сутки (в миллисекундах)
 
 spring:
   freemarker:
-    suffix: .ftlh
+    suffix: .ftl
     template-loader-path: classpath:/templates
     request-context-attribute: rc
   mvc:

@@ -24,6 +24,7 @@ public class Application {
 
         ApplicationContext context = SpringApplication.run(Application.class, args);
 
+/*
         BookingRepository bookingRepository = context.getBean(BookingRepository.class);
         HotelRepository hotelRepository = context.getBean(HotelRepository.class);
 
@@ -40,6 +41,7 @@ public class Application {
         });
 
 
+*/
     }
 
 }

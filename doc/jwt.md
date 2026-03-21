@@ -1,5 +1,12 @@
 #
 
+1. {"username":"...", "password":"..."} -> server
+2. server: проверка логина/пароля, генерация jwt токена -> клиент
+   (eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.bvaCw_BcATkKA_uogsqM13JqIpsXjBXMpMGJNmZPCOQ)
+3. клиен: запрос (Autorization: Bearer jwt) -> сервер
+
+
+
 ```java
 @Configuration
 @EnableWebSecurity
