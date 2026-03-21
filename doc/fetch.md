@@ -72,5 +72,5 @@ const formDataToJson = (formData) => JSON.stringify(Object.fromEntries(formData)
 const formElement = document.querySelector('form');
 const jsonData = formDataToJson(new FormData(formElement));
 
-
+window.location = 'https://www.example.com';
 

@@ -9,7 +9,7 @@ jwt:
 
 spring:
   freemarker:
-    suffix: .ftl
+    suffix: .ftlh
     template-loader-path: classpath:/templates
     request-context-attribute: rc
   mvc:

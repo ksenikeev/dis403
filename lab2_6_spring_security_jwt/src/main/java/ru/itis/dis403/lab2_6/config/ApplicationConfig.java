@@ -31,32 +31,6 @@ import java.util.Properties;
 //@ComponentScan("ru.itis.dis403.lab2_6")
 public class ApplicationConfig {
 
-    private final UserRepository userRepository;
-
-    public ApplicationConfig(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    @Bean
-    public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config)
-            throws Exception {
-        return config.getAuthenticationManager();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-
     @Bean
     public HikariConfig hikariConfig() {
         HikariConfig config = new HikariConfig();
