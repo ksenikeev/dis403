@@ -1,8 +1,6 @@
 package ru.itis.dis403.lab2_6.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import java.util.Date;
 
@@ -11,13 +9,18 @@ public class Booking {
     @Id
     private Long id;
 
-    private String arrivaldate;
+    @Temporal(TemporalType.DATE)
+    private Date arrivaldate;
 
+    @Temporal(TemporalType.DATE)
     private Date stayingdate;
+
+    @Temporal(TemporalType.DATE)
     private Date departuredate;
+
     @ManyToOne
     private Hotel hotel;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Person person;
 
     public Long getId() {
@@ -28,11 +31,11 @@ public class Booking {
         this.id = id;
     }
 
-    public String getArrivaldate() {
+    public Date getArrivaldate() {
         return arrivaldate;
     }
 
-    public void setArrivaldate(String arrivaldate) {
+    public void setArrivaldate(Date arrivaldate) {
         this.arrivaldate = arrivaldate;
     }
 
