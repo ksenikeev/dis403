@@ -1,0 +1,34 @@
+server:
+  port: 8090
+  servlet:
+    context-path: /
+
+jwt:
+  secret: secretikkhsd8ouu1234128937918912318768723694688123487678123    #${JWT_SECRET}
+  expiration: 86400000 # 1 сутки
+
+spring:
+  freemarker:
+    suffix: .ftlh
+    template-loader-path: classpath:/templates
+    request-context-attribute: rc
+  mvc:
+    static-path-pattern: /static/**
+    favicon:
+      enabled: false
+  #datasource:
+  #  driver-class-name: org.postgresql.Driver
+  #  username: postgres
+  #  password: post
+  #  url: jdbc:postgresql://localhost:5432/lab2_6
+  #jpa:
+  #  hibernate:
+  #    ddl-auto: update
+  #  properties:
+  #    hibernate:
+  #      format_sql: true
+  #  show-sql: true
+  security:
+    filter:
+      dispatcher-types: REQUEST, ERROR, ASYNC
+

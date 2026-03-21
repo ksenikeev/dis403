@@ -42,7 +42,7 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers( "/static/**","/usercheck").permitAll()
-                        .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
+                        //.requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
                         .anyRequest().authenticated()
                 );
         http.formLogin(formLogin ->

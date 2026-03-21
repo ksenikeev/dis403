@@ -10,7 +10,7 @@ import ru.itis.dis403.lab2_5.security.UserDetailImpl;
 @Controller
 public class AdminController {
 
-    //@PreAuthorize("ADMIN")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin/index")
     public String index(Model model) {
         UserDetailImpl userDetails =
