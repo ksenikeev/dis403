@@ -66,11 +66,43 @@ alert(result.message);
 
 ```
 
-Отправка формы 
+```js
+function sendJsonData(jsonData) {
+  // Преобразуем объект в JSON-строку
+  const jsonString = JSON.stringify(jsonData);
 
-const formDataToJson = (formData) => JSON.stringify(Object.fromEntries(formData));
-const formElement = document.querySelector('form');
-const jsonData = formDataToJson(new FormData(formElement));
+// Выполняем POST-запрос с помощью fetch
+return fetch('https://api.example.com/endpoint', {
+method: 'POST',                // метод запроса
+headers: {
+'Content-Type': 'application/json'  // указываем, что отправляем JSON
+},
+body: jsonString               // передаём JSON-строку в теле запроса
+})
+.then(response => {
+if (!response.ok) {
+throw new Error(`Ошибка HTTP: ${response.status}`);
+}
+return response.json();        // парсим ответ как JSON
+})
+.catch(error => {
+console.error('Ошибка при отправке:', error);
+throw error;                   // пробрасываем ошибку дальше
+});
+}
 
-window.location = 'https://www.example.com';
+// Пример использования
+const userData = {
+name: 'Иван',
+age: 30,
+email: 'ivan@example.com'
+};
 
+sendJsonData(userData)
+.then(result => {
+console.log('Успешно отправлено:', result);
+})
+.catch(error => {
+console.error('Не удалось отправить данные:', error);
+});
+```

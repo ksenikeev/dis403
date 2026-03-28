@@ -9,9 +9,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 import ru.itis.dis403.lab2_6.dto.AuthRequest;
 import ru.itis.dis403.lab2_6.dto.AuthResponse;
+import ru.itis.dis403.lab2_6.dto.BookingDto;
 import ru.itis.dis403.lab2_6.dto.BookingsResponse;
 import ru.itis.dis403.lab2_6.model.Booking;
 import ru.itis.dis403.lab2_6.repository.BookingRepository;
+import ru.itis.dis403.lab2_6.service.BookingService;
 import ru.itis.dis403.lab2_6.service.JWTService;
 import ru.itis.dis403.lab2_6.service.UserDetailImpl;
 
@@ -22,9 +24,24 @@ import java.util.List;
 public class BookingController {
 
     private final BookingRepository bookingRepository;
+    private final BookingService bookingService;
 
-    public BookingController(BookingRepository bookingRepository) {
+    public BookingController(BookingRepository bookingRepository, BookingService bookingService) {
         this.bookingRepository = bookingRepository;
+        this.bookingService = bookingService;
+    }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<BookingDto> getBookingById(@RequestParam("id") Long id) {
+
+        UserDetailImpl userDetails =
+                (UserDetailImpl) SecurityContextHolder.getContext()
+                        .getAuthentication().getPrincipal();
+
+        System.out.println(userDetails.getUser());
+        BookingDto booking = bookingService.getBookingById(id, userDetails.getUser());
+
+        return ResponseEntity.ok(booking);
     }
 
     @GetMapping("/all")
