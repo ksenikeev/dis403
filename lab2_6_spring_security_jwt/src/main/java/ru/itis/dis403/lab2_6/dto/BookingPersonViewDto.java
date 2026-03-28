@@ -1,9 +1,9 @@
 package ru.itis.dis403.lab2_6.dto;
 
-import jakarta.persistence.*;
-
+import lombok.Builder;
 import java.util.Date;
 
+@Builder
 public class BookingPersonViewDto {
     private Long id;
 
@@ -18,6 +18,16 @@ public class BookingPersonViewDto {
     private String gender;
 
     private Date birthdate;
+
+    private String room;
+
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
+    }
 
     public Long getId() {
         return id;

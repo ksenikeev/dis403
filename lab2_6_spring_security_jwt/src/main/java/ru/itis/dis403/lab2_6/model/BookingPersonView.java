@@ -4,6 +4,17 @@ import jakarta.persistence.*;
 
 import java.util.Date;
 
+/**
+ * create view view_booking_person as
+ * select
+ * b.id,
+ * arrivaldate,
+ * coalesce(departuredate, stayingdate) as stayingdate,
+ * hotel_id,
+ * name,
+ * gender
+ * from booking b join person p on p.id=b.person_id;
+ */
 @Entity
 @Table(name = "view_booking_person")
 public class BookingPersonView {
@@ -25,6 +36,8 @@ public class BookingPersonView {
 
     @Temporal(TemporalType.DATE)
     private Date birthdate;
+
+    private String room;
 
     public Long getId() {
         return id;
@@ -80,5 +93,13 @@ public class BookingPersonView {
 
     public void setBirthdate(Date birthdate) {
         this.birthdate = birthdate;
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
     }
 }
