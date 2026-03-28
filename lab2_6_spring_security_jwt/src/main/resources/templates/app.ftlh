@@ -14,8 +14,9 @@
 username :
 
 <script>
-    let jwt_token = localStorage.getItem('jwt_token');
-    console.log(jwt_token);
+    let jwt_token = ${jwt_token!}
+    //localStorage.getItem('jwt_token');
+    //console.log(jwt_token);
 </script>
 
 </body>

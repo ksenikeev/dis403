@@ -39,7 +39,7 @@ fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commi
 .then(commits => alert(commits[0].author.login));
 
 
-Заколовки
+Заголовки
 
 let response = fetch(protectedUrl, {
 headers: {

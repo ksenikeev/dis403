@@ -6,20 +6,26 @@
     <title>Тест</title>
 </head>
 <body>
-
+<div id="login_section" style="display:block">
 <form id="form" method="post">
     <div><input name="username" type="text" placeholder="username"/></div>
     <div><input name="password" type="password" placeholder="password"/></div>
     <div><input type="button" value="OK" onclick="login()"/></div>
 </form>
+</div>
 
+<div id="content_section" style="display:none">
+    <h>Данные по бронированиям в гостинице:</h>
+</div>
 <script>
+    let jwt_token;
     function login() {
+
         const formDataToJson = (formData) => JSON.stringify(Object.fromEntries(formData));
         const formElement = document.getElementById('form');
         const jsonData = formDataToJson(new FormData(formElement));
         console.log(jsonData)
-        console.log(JSON.stringify(jsonData))
+
         fetch('http://localhost:8090/api/auth/login', {
           method: 'POST',
           headers: {
@@ -30,9 +36,18 @@
         .then(response => response.json())
         .then(json => {
             let token = json.token;
-            localStorage.setItem('jwt_token', token);
-            window.location = '/app';
+            jwt_token = token;
+            //localStorage.setItem('jwt_token', token);
+            //window.location = '/app';
+            document.getElementById("login_section").style.display="none";
+            document.getElementById("content_section").style.display="block";
+
+            show_content();
         });
+    }
+
+    function show_content() {
+        
     }
 </script>
 

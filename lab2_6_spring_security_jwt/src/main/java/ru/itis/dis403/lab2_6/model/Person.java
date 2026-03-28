@@ -1,9 +1,8 @@
 package ru.itis.dis403.lab2_6.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -13,8 +12,12 @@ public class Person {
     private Long id;
 
     private String name;
+
     private String gender;
-    private String birthdate;
+
+    @Temporal(TemporalType.DATE)
+    private Date birthdate;
+
     private String fromcity;
 
     public Long getId() {
@@ -41,11 +44,7 @@ public class Person {
         this.gender = gender;
     }
 
-    public String getBirthdate() {
-        return birthdate;
-    }
-
-    public void setBirthdate(String birthdate) {
+    public void setBirthdate(Date birthdate) {
         this.birthdate = birthdate;
     }
 
