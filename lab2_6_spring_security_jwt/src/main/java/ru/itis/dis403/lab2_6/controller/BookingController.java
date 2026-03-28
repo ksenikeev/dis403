@@ -37,6 +37,8 @@ public class BookingController {
         System.out.println(userDetails.getUser());
         List<Booking> bookings = bookingRepository.findByHotel(userDetails.getUser().getHotel());
 
+        bookings.forEach(b-> System.out.println(b.getId()));
+
         return ResponseEntity.ok(new BookingsResponse(bookings));
     }
 }

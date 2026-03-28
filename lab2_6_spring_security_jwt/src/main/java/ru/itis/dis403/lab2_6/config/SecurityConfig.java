@@ -25,9 +25,15 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final UserDetailsService userDetailsService;
 
-    public SecurityConfig(JwtAuthenticationFilter jwtAuthFilter, UserDetailsService userDetailsService) {
+    private final RestAppSecurityExceptionHandler restAppSecurityExceptionHandler;
+    private final RestAppAccessDeniedHandler restAppAccessDeniedHandler;
+
+    public SecurityConfig(JwtAuthenticationFilter jwtAuthFilter, UserDetailsService userDetailsService,
+                          RestAppSecurityExceptionHandler restAppSecurityExceptionHandler, RestAppAccessDeniedHandler restAppAccessDeniedHandler) {
         this.jwtAuthFilter = jwtAuthFilter;
         this.userDetailsService = userDetailsService;
+        this.restAppSecurityExceptionHandler = restAppSecurityExceptionHandler;
+        this.restAppAccessDeniedHandler = restAppAccessDeniedHandler;
     }
 
     @Bean
@@ -63,7 +69,11 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authenticationProvider(authenticationProvider())
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint(restAppSecurityExceptionHandler)
+                        .accessDeniedHandler(restAppAccessDeniedHandler)
+                );
 
         return http.build();
     }
