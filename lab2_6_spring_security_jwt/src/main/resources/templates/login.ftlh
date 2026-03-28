@@ -104,7 +104,7 @@
     }
 
     function fill_booking(data) {
-        document.getElementById("booking_data").innerHTML = data;
+        document.getElementById("booking_data").innerHTML = JSON.stringify(data);
     }
 </script>
 

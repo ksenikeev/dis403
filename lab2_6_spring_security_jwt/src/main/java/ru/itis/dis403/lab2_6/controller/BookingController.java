@@ -1,5 +1,6 @@
 package ru.itis.dis403.lab2_6.controller;
 
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,7 +33,7 @@ public class BookingController {
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<BookingDto> getBookingById(@RequestParam("id") Long id) {
+    public ResponseEntity<BookingDto> getBookingById(@PathVariable Long id) {
 
         UserDetailImpl userDetails =
                 (UserDetailImpl) SecurityContextHolder.getContext()
@@ -40,7 +41,7 @@ public class BookingController {
 
         System.out.println(userDetails.getUser());
         BookingDto booking = bookingService.getBookingById(id, userDetails.getUser());
-
+        System.out.println(booking);
         return ResponseEntity.ok(booking);
     }
 
