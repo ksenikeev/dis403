@@ -1,0 +1,42 @@
+package ru.itis.dis403.lab2_7.docker.controller;
+
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+@Service
+public class MachineStatusService {
+    private Map<Integer, MachineStatus> statusMap = new HashMap<>();
+    private Long startTime;
+
+    public MachineStatusService() {
+        MachineStatus status1 = new MachineStatus();
+        status1.setTemp1(12.3);
+        status1.setTemp2(12.3);
+        status1.setTemp3(12.3);
+        status1.setPressure(2.5);
+        status1.setResource(100.);
+
+        statusMap.put(1,status1);
+
+        MachineStatus status2 = new MachineStatus();
+        status2.setTemp1(12.3);
+        status2.setTemp2(12.3);
+        status2.setTemp3(12.3);
+        status2.setPressure(2.5);
+        status2.setResource(100.);
+
+        statusMap.put(2,status2);
+
+        startTime = new Date().getTime();
+    }
+
+    public MachineStatus getStatus(Integer id) {
+        MachineStatus ms = statusMap.get(id);
+
+        return ms;
+    }
+
+}
