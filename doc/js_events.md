@@ -66,3 +66,5 @@ window.onload = function() {
 
 <input type="text" oninput="func()">
 ```
+
+setTimeout(fun, timeout_ms)

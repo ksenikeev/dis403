@@ -2,3 +2,15 @@ server:
   port: 8090
   servlet:
     context-path: /
+
+logging:
+  level:
+    root: DEBUG
+    org.springframework.web: DEBUG
+    ru.itis.dis403: DEBUG
+  pattern:
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%"
+  file:
+    name: /app/logs/telemetry.log
+    max-size: 10MB
+    max-history: 30

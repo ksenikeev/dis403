@@ -7,6 +7,8 @@ docker run -d -it ubuntu
 
 docker ps
 
+docker image ls
+
 docker attach 60b878c552c8
 
 docker stop 8abb1b4a6886
@@ -36,6 +38,8 @@ docker run -v /путь/на/хосте:/путь/в/контейнере обр
 
 docker run --mount type=bind,source=/путь/на/хосте,target=/путь/в/контейнере образ
 ```
+
+RUN mkdir -p /app/logs
 
 
 

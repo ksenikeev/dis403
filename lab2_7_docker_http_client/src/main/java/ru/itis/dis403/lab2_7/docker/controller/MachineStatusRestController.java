@@ -2,9 +2,13 @@ package ru.itis.dis403.lab2_7.docker.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 public class MachineStatusRestController {
+
+    private Logger logger = LoggerFactory.getLogger(MachineStatusRestController.class);
 
     private MachineStatusService machineStatusService;
 
@@ -14,6 +18,7 @@ public class MachineStatusRestController {
 
     @GetMapping("/api/status/{id}")
     public ResponseEntity<MachineStatus> getMachineStatus(@PathVariable("id") Integer id) {
+        logger.debug("getMachineStatus");
         return ResponseEntity.ok(machineStatusService.getStatus(id));
     }
 
