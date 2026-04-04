@@ -1,13 +1,15 @@
 package ru.itis.dis403.lab2_7.docker.controller;
 
 import org.springframework.stereotype.Service;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class MachineStatusService {
+    private static final Logger logger = LoggerFactory.getLogger(MachineStatusService.class);
     private Map<Integer, MachineStatus> statusMap = new HashMap<>();
     private Long startTime;
 
@@ -31,6 +33,7 @@ public class MachineStatusService {
         statusMap.put(2,status2);
 
         startTime = new Date().getTime();
+        logger.info("MachineStatusService инициализирован. Начальное время: {}", startTime);
     }
 
     public MachineStatus getStatus(Integer id) {
