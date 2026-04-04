@@ -35,7 +35,14 @@ public class MachineStatusService {
 
     public MachineStatus getStatus(Integer id) {
         MachineStatus ms = statusMap.get(id);
+        if (ms.getResource() < 0) return new MachineStatus();
+        Long d = new Date().getTime() - startTime;
 
+        ms.setTemp1( ms.getTemp1() + d/10_000 );
+        ms.setTemp2( ms.getTemp2() + Math.sin(d/10_000) );
+        ms.setTemp3( ms.getTemp3() + d/20_000 );
+        ms.setPressure(2.5 * ms.getTemp1()/12.5);
+        ms.setResource(ms.getResource() - d/10_000);
         return ms;
     }
 
