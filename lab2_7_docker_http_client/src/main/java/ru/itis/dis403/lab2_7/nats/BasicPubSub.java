@@ -14,10 +14,12 @@ public class BasicPubSub {
             Subscription sub = nc.subscribe(subject);
 
             // Отправка сообщения
-            nc.publish(subject, "Сегодня тема NATS".getBytes());
+            nc.publish(subject, "Сегодня тема NATS 2".getBytes());
             System.out.println("Сообщение опубликовано на тему: " + subject);
 
+            //Thread.sleep(10000);
             // Ожидание сообщения (с таймаутом в 1 секунду)
+
             Message msg = sub.nextMessage(Duration.ofSeconds(3));
             if (msg != null) {
                 String response = new String(msg.getData());
@@ -25,6 +27,7 @@ public class BasicPubSub {
             } else {
                 System.out.println("Сообщение не получено.");
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

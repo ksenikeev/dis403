@@ -4,9 +4,9 @@ import io.nats.client.*;
 
 public class AsyncSubscriber {
     public static void main(String[] args) {
-        String subject = "time.us";
+        String subject = "11-403.messages";
 
-        try (Connection nc = Nats.connect("nats://localhost:4222")) {
+        try (Connection nc = Nats.connect("nats://147.45.199.55:4222")) {
             // Создаем диспетчер для асинхронной обработки
             Dispatcher dispatcher = nc.createDispatcher((msg) -> {
                 System.out.printf("Тема: %s, Сообщение: %s%n",
