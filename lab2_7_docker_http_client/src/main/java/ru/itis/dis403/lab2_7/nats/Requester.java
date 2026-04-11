@@ -6,7 +6,7 @@ import java.time.Duration;
 
 public class Requester {
     public static void main(String[] args) {
-        try (Connection nc = Nats.connect("nats://localhost:4222")) {
+        try (Connection nc = Nats.connect("nats://147.45.199.55:4222")) {
             // Отправляем запрос и ждем ответ
             Message reply = nc.request("help", "Нужна помощь!".getBytes(), Duration.ofSeconds(2));
 

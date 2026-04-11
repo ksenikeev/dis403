@@ -4,7 +4,7 @@ import io.nats.client.*;
 
 public class Responder {
     public static void main(String[] args) {
-        try (Connection nc = Nats.connect("nats://localhost:4222")) {
+        try (Connection nc = Nats.connect("nats://147.45.199.55:4222")) {
             Dispatcher dispatcher = nc.createDispatcher((msg) -> {
                 System.out.printf("Получен запрос: %s, Ответить: %s%n",
                         new String(msg.getData()), msg.getReplyTo());
