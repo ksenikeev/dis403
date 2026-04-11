@@ -14,7 +14,4 @@ public class Weather {
     private Double windSpeed;
     private String windDirection;
     private LocalDateTime dateTime;
-
-    public Weather() {
-    }
 }
