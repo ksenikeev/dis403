@@ -7,14 +7,13 @@
 </head>
 <body>
 
-    <h2>Главная страница</h2>
+    <h2>Картинки</h2>
 
+    <#list imgs as img>
     <div>
-        <form action="/uploadimg" method="post" enctype="multipart/form-data">
-            <input type="file" name=" "/>
-            <button type="submit">Обработать</button>
-        </form>
+        <img src="${img}"></img>
     </div>
+    </#list>
 
 </body>
 </html>
