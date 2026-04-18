@@ -2,7 +2,7 @@ from flask import Flask, request, Response, jsonify
 import cv2
 import numpy as np
 
-app = Flask (__name__)
+app = Flask(__name__)
 
 
 def load_image_from_request ():
@@ -33,7 +33,7 @@ def encode_image_to_jpeg (img, quality=90):
 
 
 @app.route ('/grayscale', methods=['POST'])
-def grayscale ():
+def grayscale():
     img, error, status = load_image_from_request ()
     if error:
         return error, status
