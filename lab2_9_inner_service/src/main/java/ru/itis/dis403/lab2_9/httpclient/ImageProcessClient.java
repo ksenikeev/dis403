@@ -16,7 +16,7 @@ public class ImageProcessClient {
     public static void main(String[] args) {
         String sourcePath = "input.jpg";
         String outputPath = "output.jpg";
-        String serverUrl = "http://127.0.0.1:5000/grayscale";
+        String serverUrl = "http://127.0.0.1:5000/resize";
 
         String contentType = "image/jpeg";
         try {

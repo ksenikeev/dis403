@@ -1,5 +1,5 @@
-#FROM ubuntu:24.04
-FROM python:3.11-slim
+FROM ubuntu:24.04
+#FROM python:3.11-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
@@ -8,10 +8,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 WORKDIR /app
 
 # 1. Чистим старый кэш (если остался от предыдущих попыток)
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+#RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # 2. Обновляем списки пакетов (выполняется отдельно для точной диагностики)
-RUN apt-get update
+#RUN apt-get update
 
 # 3. Устанавливаем системные зависимости
 RUN apt-get install -y --no-install-recommends \
