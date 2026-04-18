@@ -74,12 +74,6 @@ public class ImageService {
                         cause.printStackTrace();
                         return null; // возвращаем null, чтобы цепочка завершилась без значения
                     });
-
-            // Ожидаем завершения (обработка ошибок внутри exceptionally не даёт упасть main)
-            processingFuture.join();
-            System.out.println("Программа завершена.");
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }

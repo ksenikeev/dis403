@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.itis.dis403.lab2_9.httpclient.service.ImageService;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,11 +22,17 @@ public class UploadImageController {
         this.imageService = imageService;
     }
 
-    @PostMapping("/uploadimg")
-    public String uploadImg(@RequestParam("image") MultipartFile file) {
+    @PostMapping(value = "/uploadimg", consumes="multipart/form-data")
+    public String uploadImg(Model model, @RequestParam(value = "image", required = false) MultipartFile file) {
+        model.addAttribute("imgs", new ArrayList<String>());
 
         try {
-            imageService.processImage(file.getBytes());
+            if (file != null) {
+                System.out.println("получили картинку");
+                imageService.processImage(file.getBytes());
+            } else {
+                System.out.println("нет изображения");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -36,7 +43,7 @@ public class UploadImageController {
     @GetMapping("/showimg")
     public String showImg(Model model) {
         List<String> imgs = imageService.getImgList();
-        model.addAttribute("imgs", imgs);
+        model.addAttribute("imgs", imgs != null ? imgs : new ArrayList<String>());
         return "uploadresult";
     }
 

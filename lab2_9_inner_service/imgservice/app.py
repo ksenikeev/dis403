@@ -8,6 +8,7 @@ app = Flask(__name__)
 def load_image_from_request ():
     try:
         file_bytes = request.data
+        print(file_bytes)
         nparr = np.frombuffer (file_bytes, np.uint8)
         # IMREAD_COLOR гарантирует 3-канальный формат (BGR), даже если исходник был grayscale
         img = cv2.imdecode (nparr, cv2.IMREAD_COLOR)
@@ -21,6 +22,7 @@ def load_image_from_request ():
 def encode_image_to_jpeg (img, quality=90):
     """Кодирование numpy-массива в JPEG и возврат в виде HTTP-ответа"""
     _, buffer = cv2.imencode ('.jpg', img, [cv2.IMWRITE_JPEG_QUALITY, quality])
+    print(buffer)
     return Response (buffer.tobytes (), mimetype='image/jpeg')
 
 

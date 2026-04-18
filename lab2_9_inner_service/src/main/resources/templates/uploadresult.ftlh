@@ -9,9 +9,11 @@
 
     <h2>Картинки</h2>
 
+    <a href="/showimg">Показать картинки</a>
+
     <#list imgs as img>
     <div>
-        <img src="${img}"></img>
+        <img src="data:image/jpeg;base64,${img}"></img>
     </div>
     </#list>
 

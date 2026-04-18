@@ -11,7 +11,7 @@
 
     <div>
         <form action="/uploadimg" method="post" enctype="multipart/form-data">
-            <input type="file" name=" "/>
+            <input type="file" name="image"/>
             <button type="submit">Обработать</button>
         </form>
     </div>
