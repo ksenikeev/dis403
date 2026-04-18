@@ -1,12 +1,10 @@
 package ru.itis.dis403.lab2_8.model;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Getter@Setter@Builder
+@Getter@Setter@Builder@NoArgsConstructor@AllArgsConstructor
 public class Weather {
     private String city;
     private Double temp;

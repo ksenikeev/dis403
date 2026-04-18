@@ -41,6 +41,15 @@ docker run --mount type=bind,source=/путь/на/хосте,target=/путь/�
 
 RUN mkdir -p /app/logs
 
+### Сохранить образ в архив
+`docker save -o my-image.tar my-image:latest`
+
+`docker save -o my-image.tar my-image:latest | gzip > my-image.tar.gz`
+
+### Загрузить образ из архива
+`docker load -i my-image.tar`
+
+`gunzip -c my-image.tar.gz | docker load`
 
 
 
