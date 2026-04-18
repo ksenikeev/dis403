@@ -6,16 +6,8 @@ app = Flask(__name__)
 
 
 def load_image_from_request ():
-    """Загрузка и декодирование изображения из POST-запроса"""
-    if 'image' not in request.files:
-        return None, jsonify ({"error": "Поле 'image' отсутствует в запросе"}), 400
-
-    file = request.files['image']
-    if not file.filename:
-        return None, jsonify ({"error": "Файл не выбран"}), 400
-
     try:
-        file_bytes = file.read ()
+        file_bytes = request.data
         nparr = np.frombuffer (file_bytes, np.uint8)
         # IMREAD_COLOR гарантирует 3-канальный формат (BGR), даже если исходник был grayscale
         img = cv2.imdecode (nparr, cv2.IMREAD_COLOR)
