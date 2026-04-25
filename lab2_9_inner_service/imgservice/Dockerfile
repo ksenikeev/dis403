@@ -18,7 +18,7 @@ RUN apt-get install -y --no-install-recommends \
 
 # Install Python dependencies
 COPY requirements2.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements2.txt
 
 # Copy application code
 COPY . .

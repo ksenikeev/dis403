@@ -9,4 +9,6 @@
 6. `docker run -d --name opencv-flask -p 5000:5000 flask-opencv-app`
 7. просмотр логов `docker logs -f opencv-flask`
 
+`docker build --network=host -t flip-opencv-app . `
+
 
