@@ -1,19 +1,14 @@
-FROM ubuntu:24.04
-#FROM python:3.11-slim
+#FROM ubuntu:24.04
+FROM python:3.11-slim
 
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    DEBIAN_FRONTEND=noninteractive
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /app
 
-# 1. Чистим старый кэш (если остался от предыдущих попыток)
-#RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# 2. Обновляем списки пакетов (выполняется отдельно для точной диагностики)
-#RUN apt-get update
-
-# 3. Устанавливаем системные зависимости
+# Update package lists and install system dependencies for OpenCV
+RUN apt-get update
 RUN apt-get install -y --no-install-recommends \
     ca-certificates \
     libgl1 \
@@ -21,11 +16,14 @@ RUN apt-get install -y --no-install-recommends \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Copy application code
 COPY . .
 
+# Create non-root user for security
 RUN useradd --create-home appuser && chown -R appuser:appuser /app
 USER appuser
 

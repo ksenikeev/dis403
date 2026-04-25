@@ -5,7 +5,7 @@
 (`venv\Scripts\activate.bat`)
 4. Установка зависимостей `pip install flask opencv-python numpy requests`
    (`pip install --no-cache-dir -r requirements.txt`)
-5. `docker build -t flask-opencv-app .`
+5. `docker build --network=host -t flask-opencv-app . `
 6. `docker run -d --name opencv-flask -p 5000:5000 flask-opencv-app`
 7. просмотр логов `docker logs -f opencv-flask`
 
