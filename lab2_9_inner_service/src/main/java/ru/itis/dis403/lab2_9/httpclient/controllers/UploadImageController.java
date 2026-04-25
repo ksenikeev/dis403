@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import ru.itis.dis403.lab2_9.httpclient.service.ImageService;
+import ru.itis.dis403.lab2_9.httpclient.service.ImageServiceForNats;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,9 +18,11 @@ import java.util.Map;
 public class UploadImageController {
 
     private final ImageService imageService;
+    private final ImageServiceForNats imageService2;
 
-    public UploadImageController(ImageService imageService) {
+    public UploadImageController(ImageService imageService, ImageServiceForNats imageService2) {
         this.imageService = imageService;
+        this.imageService2 = imageService2;
     }
 
     @PostMapping(value = "/uploadimg", consumes="multipart/form-data")
@@ -43,7 +46,9 @@ public class UploadImageController {
     @GetMapping("/showimg")
     public String showImg(Model model) {
         List<String> imgs = imageService.getImgList();
+        List<String> imgs2 = imageService2.getImgList();
         model.addAttribute("imgs", imgs != null ? imgs : new ArrayList<String>());
+        model.addAttribute("imgs2", imgs2 != null ? imgs2 : new ArrayList<String>());
         return "uploadresult";
     }
 

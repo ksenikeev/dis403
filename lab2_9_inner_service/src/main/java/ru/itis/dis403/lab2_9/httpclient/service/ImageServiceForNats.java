@@ -8,16 +8,20 @@ import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ImageServiceForNats {
 
+    private List<String> imgList = new ArrayList<>();
+
     private String natsUrl = "nats://localhost:4222";
     // Описываем тему сообщения в канал
     private String subject = "request.image.mirror";
+
+    public List<String> getImgList() {
+        return imgList;
+    }
 
     // сформировать клиент к брокеру сообщений
     public String processImage(byte[] image) {
@@ -39,6 +43,11 @@ public class ImageServiceForNats {
             // Парсим JSON-ответ
             String jsonResponse = new String(reply.getData(), StandardCharsets.UTF_8);
             System.out.println("response " + jsonResponse);
+            Map<String, String> resultMap = mapper.readValue(jsonResponse, Map.class);
+
+            if (resultMap.get("status") != null && resultMap.get("status").equals("success")) {
+                imgList.add(resultMap.get("image"));
+            }
 
             return jsonResponse;
         } catch (InterruptedException e) {

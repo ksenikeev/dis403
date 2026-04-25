@@ -17,5 +17,12 @@
     </div>
     </#list>
 
+
+    <#list imgs2 as img>
+    <div>
+        <img src="data:image/jpeg;base64,${img}"></img>
+    </div>
+    </#list>
+
 </body>
 </html>

@@ -24,12 +24,13 @@ public class UploadImage2Controller {
 
     @PostMapping(value = "/uploadimg2", consumes="multipart/form-data")
     public String uploadImg(Model model, @RequestParam(value = "image", required = false) MultipartFile file) {
+        model.addAttribute("imgs", new ArrayList<String>());
         model.addAttribute("imgs2", new ArrayList<String>());
 
         try {
             if (file != null) {
                 System.out.println("получили картинку");
-                //imageService.processImage(file.getBytes());
+                imageService.processImage(file.getBytes());
             } else {
                 System.out.println("нет изображения");
             }

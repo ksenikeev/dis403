@@ -1,20 +1,26 @@
 import asyncio
+import base64
 import json
 import nats
 from nats.aio.msg import Msg
-
+import cv2
 
 async def main():
     nc = await nats.connect ("nats://localhost:4222")
 
     async def request_handler(msg: Msg):
         try:
-            print (f"Получен запрос: {msg.data.decode ()}")
+            print (f"Получен запрос: {msg.data}")
             request_data = json.loads(msg.data.decode())
+
+            data_array = base64.decode(request_data["image"])
+            img = cv2.imread (data_array)
+            flipped = cv2.flip (img, 0)
+            success, jpeg_bytes = cv2.imencode ('.jpg', flipped, [cv2.IMWRITE_JPEG_QUALITY, 85])
 
             response = {
                 "status": "success",
-                "received": request_data,
+                "image": base64.b64encode(jpeg_bytes).decode('ascii'),
             }
             response_json = json.dumps(response)
 
