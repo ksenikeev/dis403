@@ -17,7 +17,7 @@ RUN apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
-COPY requirements.txt .
+COPY requirements2.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
@@ -27,6 +27,6 @@ COPY . .
 RUN useradd --create-home appuser && chown -R appuser:appuser /app
 USER appuser
 
-EXPOSE 5000
-
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "2", "--timeout", "120", "app:app"]
+#EXPOSE 5000
+#CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "2", "--timeout", "120", "app:app"]
+CMD ["python", "app_mb"]

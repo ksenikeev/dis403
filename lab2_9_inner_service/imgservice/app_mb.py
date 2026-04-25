@@ -4,6 +4,7 @@ import json
 import nats
 from nats.aio.msg import Msg
 import cv2
+import numpy as np
 
 async def main():
     nc = await nats.connect ("nats://localhost:4222")
@@ -12,10 +13,13 @@ async def main():
         try:
             print (f"Получен запрос: {msg.data}")
             request_data = json.loads(msg.data.decode())
-
-            data_array = base64.decode(request_data["image"])
-            img = cv2.imread (data_array)
-            flipped = cv2.flip (img, 0)
+            print(request_data["image"])
+            data_array = base64.b64decode(request_data["image"])
+            np_array = np.frombuffer(data_array, dtype=np.uint8)
+            img = cv2.imdecode(np_array, cv2.IMREAD_COLOR)
+            print("img.shape ", img.shape)
+            flipped = cv2.flip(img, 1)
+            print ("flipped.shape ", flipped.shape)
             success, jpeg_bytes = cv2.imencode ('.jpg', flipped, [cv2.IMWRITE_JPEG_QUALITY, 85])
 
             response = {
