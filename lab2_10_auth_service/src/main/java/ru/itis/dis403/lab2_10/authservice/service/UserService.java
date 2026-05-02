@@ -31,6 +31,12 @@ public class UserService {
                 .findFirst().orElse(null);
     }
 
+    public User findById(Long userId) {
+        return users.stream()
+                .filter(u -> u.getId().equals(userId))
+                .findFirst().orElse(null);
+    }
+
     public Map<String, Long> getCodeForInnerApps() {
         return codeForInnerApps;
     }
