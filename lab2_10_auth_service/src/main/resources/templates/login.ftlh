@@ -8,10 +8,10 @@
 <body>
 <h1>Аутентификация на Auth сервисе</h1>
 <div>
-<form id="form" method="post">
+<form id="form" method="post" action="/api/v1/auth/login">
     <div><input name="username" type="text" placeholder="username"/></div>
     <div><input name="password" type="password" placeholder="password"/></div>
-
+    <input type="hidden" name="clientId" value="${clientId!}"/>
     <div>
         <h3>Сайт app запрашивает разрешения на:</h3>
 
