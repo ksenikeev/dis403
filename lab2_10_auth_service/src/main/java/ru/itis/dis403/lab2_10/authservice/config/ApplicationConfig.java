@@ -1,4 +1,4 @@
-package ru.itis.dis403.lab2_9.httpclient.config;
+package ru.itis.dis403.lab2_10.authservice.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

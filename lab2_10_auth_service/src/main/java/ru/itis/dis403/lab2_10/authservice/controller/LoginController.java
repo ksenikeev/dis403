@@ -8,10 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.itis.dis403.lab2_10.authservice.clientsapp.AppData;
+import ru.itis.dis403.lab2_10.authservice.model.User;
 import ru.itis.dis403.lab2_10.authservice.service.ApiClientService;
 import ru.itis.dis403.lab2_10.authservice.service.UserService;
 
-@Controller("/api/v1/")
+import java.util.UUID;
+
+@Controller
+@RequestMapping("/api/v1/")
 public class LoginController {
 
     private final ApiClientService service;
@@ -29,7 +33,7 @@ public class LoginController {
 
         model.addAttribute("grants", appData.getScopes());
         model.addAttribute("clientId", clientId);
-
+        System.out.println(appData.getAppRedirectURL());
         return "login";
     }
 
@@ -38,11 +42,20 @@ public class LoginController {
                                        @RequestParam("password") String password,
                                        @RequestParam("clientId") String clientId) {
 
+        User user = userService.findByUsername(username);
 
-        AppData appData = service.getApp(clientId);
         RedirectView rv = new RedirectView();
-        rv.setUrl("http://");
+        AppData appData = service.getApp(clientId);
+
+        if (user != null && user.getPassword().equals(password)) {
+            String code = UUID.randomUUID().toString();
+            userService.getCodeForInnerApps().put(code, user.getId());
+            // формируем редирект на клиентское приложение + код пользователя для jwt токена
+            rv.setUrl(appData.getAppRedirectURL() + "?code=" + code);
+        } else {
+            // TODO проверить без кодирования пробела
+            rv.setUrl(appData.getAppRedirectURL() + "?error=Authentification Error");
+        }
         return rv;
     }
-
 }
